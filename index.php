@@ -1,24 +1,51 @@
 <?php
 
 class Person {
-    var $firstName;
-    var $lastName;
+    protected $firstName;
+    protected $lastName;
+    protected $nickname;
+    protected $changeNickname = 0;
 
-    function __construct($firstName, $lastName)
+    public function __construct($firstName, $lastName)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
     }
 
-    function fullName() {
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    public function setNickname($nickname)
+    {
+        if ($this->changeNickname >= 2) {
+            throw new Exception("You can't change a nickname more than 2 times");
+        }
+
+        $this->nickname = $nickname;
+
+        $this->changeNickname++;
+    }
+
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    public function getFullName() {
         return "{$this->firstName} {$this->lastName}";
     }
 }
 
 $person1 = new Person('Cesar', 'Acual');
 
-$person2 = new Person('Ramon', 'Lapenta');
+$person1->setNickname('ChechaMas');
+$person1->setNickname('Ducke');
 
-//
-
-echo "Bienvenido {$person1->fullName()} es amigo de {$person2->fullName()}";
+die($person1->getNickname());
